@@ -14,10 +14,8 @@ return new class extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
-            $table->string('description');
-
-            $table->dateTime('begin', $precision = 0);
-            $table->dateTime('end', $precision = 0);
+            $table->string('day');
+            $table->string('time');
 
             $table->uuid('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');

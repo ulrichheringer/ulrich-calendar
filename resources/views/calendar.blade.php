@@ -27,12 +27,56 @@
     <li>Su</li>
 </ul>
 
-<ul class="days">
+<table>
+    <tr>
+        <td>Time</td>
+        <td>Mo</td>
+        <td>Tu</td>
+        <td>We</td>
+        <td>Th</td>
+        <td>Fr</td>
+        <td>Sa</td>
+        <td>Su</td>
+    </tr>
+    <tr>
+        <td>10:00</td>
+        <td>Passear cachorro</td>
+        <td>No tasks...</td>
+        <td>No tasks...</td>
+        <td>No tasks...</td>
+        <td>No tasks...</td>
+        <td>No tasks...</td>
+        <td>No tasks...</td>
+    </tr>
+    <tr>
+        <td>11:00</td>
+        <td>Estudar</td>
+    </tr>
+    <tr>
+        <td>12:00</td>
+        <td>Comer</td>
+    </tr>
+    <tr>
+        <td>13:00</td>
+        <td>Dormir</td>
+    </tr>
+    <tr>
+        <td>14:00</td>
+    </tr>
+    <tr>
+        <td>15:00</td>
+    </tr>
+    <tr>
+        <td>16:00</td>
+    </tr>
+</table>
+
+{{--<ul class="days">
     @php
         $totalDaysInMonth = cal_days_in_month(CAL_GREGORIAN, $currentMonthNumber, $currentYear);
     @endphp
     @for ($i = 0; $i<=$totalDaysInMonth;$i++)
         <li ><span class={{ $i == $currentDay ? 'active' : '' }}>{{ $i }}</span></li>
     @endfor
-</ul>
+</ul>--}}
 @endsection
