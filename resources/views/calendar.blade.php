@@ -5,7 +5,6 @@
     date_default_timezone_set('America/Sao_Paulo');
     // $date = date('m/d/Y h:i:s a', time());
     $currentYear = date('Y', time());
-    $currentDay = date('d', time());
     $currentMonth = date('F', time());
     $currentMonthNumber = date('m', time());
 @endphp
@@ -17,7 +16,7 @@
     </ul>
 </div>
   
-<ul class="weekdays">
+{{-- <ul class="weekdays">
     <li>Mo</li>
     <li>Tu</li>
     <li>We</li>
@@ -25,9 +24,9 @@
     <li>Fr</li>
     <li>Sa</li>
     <li>Su</li>
-</ul>
+</ul> --}}
 
-<table>
+{{-- <table>
     <tr>
         <td>Time</td>
         <td>Mo</td>
@@ -38,37 +37,83 @@
         <td>Sa</td>
         <td>Su</td>
     </tr>
+    @foreach ($tasks as $task)
+    <tr><td>{{ $task->time }}<td><td>{{ $task->name }}</td></tr>
+    @endforeach
+</table> --}}
+{{-- <table>
     <tr>
-        <td>10:00</td>
-        <td>Passear cachorro</td>
-        <td>No tasks...</td>
-        <td>No tasks...</td>
-        <td>No tasks...</td>
-        <td>No tasks...</td>
-        <td>No tasks...</td>
-        <td>No tasks...</td>
+        <td>Time</td>
+        <td>Mo</td>
+        <td>Tu</td>
+        <td>We</td>
+        <td>Th</td>
+        <td>Fr</td>
+        <td>Sa</td>
+        <td>Su</td>
     </tr>
+    @foreach ($tasks as $task)
     <tr>
-        <td>11:00</td>
-        <td>Estudar</td>
+        <td>{{ $task->time }}</td>
+        <td>{{ $task->name }}</td>
+        <td></td> <!-- Thu -->
+        <td></td> <!-- We -->
+        <td></td> <!-- Th -->
+        <td></td> <!-- Fr -->
+        <td></td> <!-- Sa -->
+        <td></td> <!-- Su -->
     </tr>
+    @endforeach
+</table> --}}
+
+{{-- <table>
     <tr>
-        <td>12:00</td>
-        <td>Comer</td>
+        <td>Time</td>
+        <td>Mo</td>
+        <td>Tu</td>
+        <td>We</td>
+        <td>Th</td>
+        <td>Fr</td>
+        <td>Sa</td>
+        <td>Su</td>
     </tr>
+    @foreach ($groupedTasks as $time => $dayTasks)
+        <tr>
+            <td>{{ $time }}</td>
+            @foreach (['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as $day)
+                <td>
+                    @if (isset($dayTasks[$day]))
+                        {{ Str::limit($dayTasks[$day]->name,20) }}
+                        @else
+                        No tasks to show
+                    @endif
+                </td>
+            @endforeach
+        </tr>
+    @endforeach
+</table> --}}
+
+<table>
     <tr>
-        <td>13:00</td>
-        <td>Dormir</td>
+        <td>Time</td>
+        @foreach (['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'] as $dayAbbreviation)
+            <td>{{ $dayAbbreviations[$dayAbbreviation] }}</td>
+        @endforeach
     </tr>
-    <tr>
-        <td>14:00</td>
-    </tr>
-    <tr>
-        <td>15:00</td>
-    </tr>
-    <tr>
-        <td>16:00</td>
-    </tr>
+    @foreach ($allHoursInDay as $hour)
+        <tr>
+            <td>{{ $hour }}</td>
+            @foreach (['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'] as $dayAbbreviation)
+                <td>
+                    @if (isset($groupedTasks[$hour][$dayAbbreviations[$dayAbbreviation]]))
+                        {{ Str::limit($groupedTasks[$hour][$dayAbbreviations[$dayAbbreviation]]->name, 50) }}
+                    @else
+                        {{  Str::limit("Nenhuma tarefa", 15)}}
+                    @endif
+                </td>
+            @endforeach
+        </tr>
+    @endforeach
 </table>
 
 {{--<ul class="days">
@@ -79,4 +124,8 @@
         <li ><span class={{ $i == $currentDay ? 'active' : '' }}>{{ $i }}</span></li>
     @endfor
 </ul>--}}
+
+{{-- @foreach ($tasks as $task)
+    <p>{{ $task->time }} - {{ $task->name }}</p>
+@endforeach --}}
 @endsection

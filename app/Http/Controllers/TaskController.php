@@ -13,8 +13,42 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $task = Task::all()->first();
-        return $task->user;
+        // $tasks = Task::all();
+        $tasks = Task::orderBy('time')->get();
+
+        $groupedTasks = [];
+
+        $dayAbbreviations = [
+            'Mo' => 'Monday',
+            'Tu' => 'Tuesday',
+            'We' => 'Wednesday',
+            'Th' => 'Thursday',
+            'Fr' => 'Friday',
+            'Sa' => 'Saturday',
+            'Su' => 'Sunday',
+        ];
+
+        $allHoursInDay = [];
+        for ($hour = 7; $hour < 24; $hour++) {
+            $allHoursInDay[] = str_pad($hour, 2, '0', STR_PAD_LEFT) . ':00'; // Format as HH:00
+        }
+
+        foreach ($tasks as $task) {
+            $time = $task->time;
+            $day = $task->day;
+
+            // Create a new group for each unique time
+            if (!isset($groupedTasks[$time])) {
+                $groupedTasks[$time] = [];
+            }
+
+            // Add the task to the corresponding time and day group
+            $groupedTasks[$time][$day] = $task;
+        }
+
+
+        // echo dd($groupedTasks);
+        return view('calendar', compact('groupedTasks', 'allHoursInDay', 'dayAbbreviations'));
     }
 
     /**
